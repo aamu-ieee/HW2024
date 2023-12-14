@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # File name   : servo.py
 # Description : Control Servos
-# Author      : William
-# Date        : 2019/02/23
 from __future__ import division
 import time
 import RPi.GPIO as GPIO
