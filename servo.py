@@ -17,9 +17,11 @@ pwm2_direction = 1
 pwm3_direction = 1
 pwm4_direction = 0
 
+# Initialize the PCA9685 board
 pwm = Adafruit_PCA9685.PCA9685()
-pwm.set_pwm_freq(50)
+pwm.set_pwm_freq(50)	# Set the PWM frequency to 50 Hz (frequency for specific servos)
 
+#initialise each servo: there are 5 servos -- 0,1,2,3,4
 pwm0_init = 300
 pwm0_max  = 450
 pwm0_min  = 150
@@ -47,17 +49,19 @@ pwm4_pos  = pwm4_init
 
 org_pos = 300
 
-
+# performs a similtaneous scanning and rotation
 def radar_scan():
 	global pwm0_pos
 	scan_result = 'U: '
 	scan_speed = 1
 	if pwm0_direction:
+		#set the angle to maximum if direction is 1 #checkdist assumes to return the ultrasonic sensors measured distance
 		pwm0_pos = pwm0_max
 		pwm.set_pwm(0, 0, pwm0_pos)
 		time.sleep(0.5)
 		scan_result += str(ultra.checkdist())
 		scan_result += ' '
+		#loop to rotate the servo until the minimum angle is achieved
 		while pwm0_pos>pwm0_min:
 			pwm0_pos-=scan_speed
 			pwm.set_pwm(0, 0, pwm0_pos)
@@ -65,6 +69,7 @@ def radar_scan():
 			scan_result += ' '
 		pwm.set_pwm(0, 0, pwm0_init)
 	else:
+		#this runs when the direction is opposite = 0
 		pwm0_pos = pwm0_min
 		pwm.set_pwm(0, 0, pwm0_pos)
 		time.sleep(0.5)
