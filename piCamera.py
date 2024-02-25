@@ -1,4 +1,4 @@
-import picamera
+import picamera2
 import cv2
 import numpy as np
 import time
@@ -83,7 +83,7 @@ def locate_cylinders(frame):
 
 
 # Create a PiCamera object
-camera = picamera.PiCamera()
+camera = picamera2.PiCamera2()
 
 # Set camera resolution (optional)
 camera.resolution = (640, 480)
